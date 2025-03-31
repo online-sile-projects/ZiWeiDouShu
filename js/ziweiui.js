@@ -172,7 +172,7 @@ function loadCase(index) {
     document.getElementById('sel_Hour').value = selectedCase.hour;
     document.querySelector(`input[name="gender"][value="${selectedCase.gender}"]`).checked = true;
     
-    calcZiwei();
+    ziweiUI.genZiwei();
 }
 
 function deleteCase(index) {
