@@ -69,7 +69,7 @@ var ziweiUI = {
 					+ "生肖：【" + ziwei.getShengXiao() + "】"+"<br>"
 					+ "<div>"+ ziwei.getFiveElement() +"</div>" 
 					+ "<div>"+ ziwei.getYinYangGender()+"</div>"
-					+ "<div class='zwcopy'>by cubshuang</div>";
+					+ "<div class='zwcopy'>by cubshuang folk by wolke</div>";
 	  //render Direction
 		var styleLR=[" zwStarLeft"," zwStarRight"];
 		if(this.right2left){ styleLR.reverse(); }
