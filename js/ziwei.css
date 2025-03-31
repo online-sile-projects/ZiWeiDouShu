@@ -1,4 +1,4 @@
-body { padding: 10px 25px;margin: 0;background-image:url('../img/star.png');background-repeat:repeat;}
+body { padding: 10px 25px;margin: 0;}
 .ziwei{ display: grid;border:4px darkgray groove; padding:1px; height:90%;
 	grid-template-columns: repeat(4,25%);
 	grid-template-rows: repeat(4,25%);}
