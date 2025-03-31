@@ -128,8 +128,65 @@ var ziweiUI = {
 		}
 	}
 };
-window.addEventListener('load' ,function(){
-//開始使用
+// 命例管理功能
+function saveCase() {
+    const currentCase = {
+        year: document.getElementById('sel_Year').value,
+        month: document.getElementById('sel_Month').value,
+        day: document.getElementById('sel_Day').value,
+        hour: document.getElementById('sel_Hour').value,
+        gender: document.querySelector('input[name="gender"]:checked').value
+    };
+    
+    let savedCases = JSON.parse(localStorage.getItem('ziweiCases') || '[]');
+    savedCases.push(currentCase);
+    localStorage.setItem('ziweiCases', JSON.stringify(savedCases));
+    alert('命例已儲存');
+}
+
+function showCases() {
+    const savedCasesDiv = document.querySelector('.saved-cases');
+    const savedCases = JSON.parse(localStorage.getItem('ziweiCases') || '[]');
+    
+    if (savedCasesDiv.style.display === 'none') {
+        savedCasesDiv.innerHTML = savedCases.map((c, index) => `
+            <div class="case-item">
+                ${c.year}年${c.month}月${c.day}日${c.hour}時 ${c.gender === 'M' ? '男' : '女'}
+                <button onclick="loadCase(${index})">載入</button>
+                <button onclick="deleteCase(${index})">刪除</button>
+            </div>
+        `).join('');
+        savedCasesDiv.style.display = 'block';
+    } else {
+        savedCasesDiv.style.display = 'none';
+    }
+}
+
+function loadCase(index) {
+    const savedCases = JSON.parse(localStorage.getItem('ziweiCases') || '[]');
+    const selectedCase = savedCases[index];
+    
+    document.getElementById('sel_Year').value = selectedCase.year;
+    document.getElementById('sel_Month').value = selectedCase.month;
+    document.getElementById('sel_Day').value = selectedCase.day;
+    document.getElementById('sel_Hour').value = selectedCase.hour;
+    document.querySelector(`input[name="gender"][value="${selectedCase.gender}"]`).checked = true;
+    
+    calcZiwei();
+}
+
+function deleteCase(index) {
+    if (confirm('確定要刪除此命例嗎？')) {
+        let savedCases = JSON.parse(localStorage.getItem('ziweiCases') || '[]');
+        savedCases.splice(index, 1);
+        localStorage.setItem('ziweiCases', JSON.stringify(savedCases));
+        showCases();
+    }
+}
+
+// 在網頁載入完成後綁定事件
+window.onload = function() {
+    //開始使用
 	ziweiUI.initial();
 	document.getElementById("btnNowDate").addEventListener('click',function () {ziweiUI.genNowDateZiwei();});
 	let s = document.querySelectorAll("select");
@@ -142,4 +199,6 @@ window.addEventListener('load' ,function(){
 	}
 	window.addEventListener('resize',function() { ziweiUI.resize();});
 	//$(window).resize(function() { ziweiUI.resize();});
-})
+    document.getElementById('btnSaveCase').onclick = saveCase;
+    document.getElementById('btnShowCases').onclick = showCases;
+}
